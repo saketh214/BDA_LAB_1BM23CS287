@@ -1,0 +1,112 @@
+create database banking;
+use banking;
+
+
+
+CREATE TABLE customer (
+    customer_id VARCHAR(10) PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    phone VARCHAR(15),
+    address VARCHAR(100),
+    account_type VARCHAR(20),
+    created_date DATE
+);
+INSERT INTO customer (
+  customer_id, name, email, phone, address, account_type, created_date
+) VALUES
+('C101', 'Ravi Kumar', 'ravi@gmail.com', '9876543210', 'Bangalore', 'Savings', '2022-01-15'),
+('C102', 'Anita Sharma', 'anita@gmail.com', '9123456780', 'Mumbai', 'Current', '2021-11-20'),
+('C103', 'Rahul Mehta', 'rahul@gmail.com', '9988776655', 'Delhi', 'Savings', '2023-03-10'),
+('C104', 'Sneha Iyer', 'sneha@gmail.com', '9090909090', 'Chennai', 'Savings', '2020-07-05'),
+('C105', 'Arjun Patel', 'arjun@gmail.com', '9765432109', 'Ahmedabad', 'Current', '2022-09-18');
+
+CREATE TABLE transaction (
+    transaction_id VARCHAR(10) PRIMARY KEY,
+    customer_id VARCHAR(10),
+    transaction_date DATE,
+    transaction_type VARCHAR(20),
+    amount DECIMAL(10,2),
+    merchant VARCHAR(50),
+    location VARCHAR(50)
+);
+
+INSERT INTO transaction (
+  transaction_id, customer_id, transaction_date, transaction_type, amount, merchant, location
+) VALUES
+('T001', 'C101', '2024-01-05', 'Debit', 5000, 'Amazon', 'Online'),
+('T002', 'C101', '2024-01-10', 'Credit', 25000, 'Salary', 'Bangalore'),
+('T003', 'C102', '2024-01-12', 'Debit', 12000, 'Flipkart', 'Online'),
+('T004', 'C103', '2024-01-15', 'Debit', 3000, 'Swiggy', 'Delhi'),
+('T005', 'C104', '2024-01-20', 'Credit', 40000, 'Salary', 'Chennai'),
+('T006', 'C105', '2024-01-22', 'Debit', 15000, 'Croma', 'Ahmedabad'),
+('T007', 'C102', '2024-01-25', 'Credit', 35000, 'Business Income', 'Mumbai'),
+('T008', 'C103', '2024-01-28', 'Debit', 8000, 'Uber', 'Delhi');
+
+
+CREATE TABLE credit_history (
+    credit_id VARCHAR(10) PRIMARY KEY,
+    customer_id VARCHAR(10),
+    credit_score INT,
+    loan_amount DECIMAL(12,2),
+    repayment_status VARCHAR(20),
+    default_history VARCHAR(10),
+    last_updated DATE
+);
+
+INSERT INTO credit_history (
+  credit_id, customer_id, credit_score, loan_amount, repayment_status, default_history, last_updated
+) VALUES
+('CR01', 'C101', 750, 300000, 'Paid', 'No', '2024-01-01'),
+('CR02', 'C102', 680, 500000, 'Pending', 'No', '2024-01-03'),
+('CR03', 'C103', 590, 200000, 'Default', 'Yes', '2023-12-15'),
+('CR04', 'C104', 810, 100000, 'Paid', 'No', '2024-01-05'),
+('CR05', 'C105', 620, 400000, 'Pending', 'No', '2024-01-10');
+
+show tables;
+
+-- CRUD operations
+
+-- CREatE
+ INSERT INTO customer VALUES
+('C106', 'Neha Verma', 'neha@gmail.com', '9012345678', 'Pune', 'Savings', '2023-12-01');
+
+
+
+
+-- REaD
+
+-- View transactions of customer C101
+SELECT * 
+FROM transaction 
+WHERE customer_id = 'C101';
+
+-- View customers with credit score above 700
+SELECT * 
+FROM credit_history 
+WHERE credit_score > 700;
+
+
+-- Join  (customer + transaction)
+SELECT c.name, t.transaction_type, t.amount
+FROM customer c
+JOIN transaction t
+ON c.customer_id = t.customer_id;
+
+
+
+-- UPDATE
+
+--  Update transaction amount
+UPDATE transaction
+SET amount = 9000
+WHERE transaction_id = 'T003';
+
+
+-- DELETE
+
+-- Delete credit record
+DELETE FROM credit_history
+WHERE credit_id = 'CR06';
+
+
