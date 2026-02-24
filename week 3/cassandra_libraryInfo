@@ -1,6 +1,6 @@
 cqlsh> CREATE KEYSPACE library_287
    ... WITH replication = {
-   ...     'class': 'SimpleStrategy',
+   ...      'class': 'SimpleStrategy',
    ...     'replication_factor': 1
    ... };
 cqlsh> USE library_287;
