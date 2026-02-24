@@ -30,16 +30,7 @@ cqlsh:library_287> BEGIN BATCH
                ... VALUES (112, 3, 'Ankit', 'ML', '2026-02-22');
                ... 
                ... APPLY BATCH;
-cqlsh:library_287> UPDATE Library_Counter
-               ... SET Counter_Value = Counter_Value + 1
-               ... WHERE Stud_Id = 112 AND Book_Id = 2;
-cqlsh:library_287> o (Stud_Id, Book_Id, Stud_Name, Book_Name, Date_Issue)
-               ... VALUES (112, 2, 'Ankit', 'BDA', '2026-02-21');
-               ... 
-               ... INSERT INTO Library_Info (Stud_Id, Book_Id, Stud_Name, Book_Name, Date_Issue)
-               ... VALUES (112, 3, 'Ankit', 'ML', '2026-02-22');
-               ... 
-               ... APPLY BATCH;
+
 
 cqlsh:library_287> SELECT * FROM Library_Info;
 
