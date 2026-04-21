@@ -1,0 +1,19 @@
+scala> val textFile = sc.textFile("/home/hadoop/wc.txt")
+textFile: org.apache.spark.rdd.RDD[String] = /home/hadoop/wc.txt MapPartitionsRDD[1] at textFile at <console>:23
+
+scala> val counts = textFile.flatMap(line => line.split(" ")).map(word => (word,1)).reduceByKey(_ + _)
+counts: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledRDD[4] at reduceByKey at <console>:23
+
+scala> import scala.collection.immutable.ListMap
+import scala.collection.immutable.ListMap
+
+scala> val sorted = ListMap(counts.collect.sortWith(_._2 > _._2):_*)
+sorted: scala.collection.immutable.ListMap[String,Int] = ListMap(spark -> 6, hello -> 3, big -> 1, data -> 1, world -> 1)
+
+scala> println(sorted)
+ListMap(spark -> 6, hello -> 3, big -> 1, data -> 1, world -> 1)
+
+scala> for((k,v) <- sorted) if(v > 4) println(k + "," + v)
+spark,6
+
+scala> 
